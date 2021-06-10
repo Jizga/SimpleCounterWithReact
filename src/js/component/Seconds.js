@@ -19,10 +19,18 @@ export function Seconds(props) {
 	};
 
 	return (
-		<div className="d-flex justify-content-start bg-danger pt-5 pb-5 pl-1 pr-5 MyEOpacity">
+		<div className="d-flex justify-content-start MyEOpacity">
 			{/* RENDERIZADO CONDICIONADO */}
-			{show ? <div className="text-white mr-1">0</div> : ""}
-			<div className="text-white" id="seconds">
+			{show ? (
+				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3">
+					0
+				</div>
+			) : (
+				""
+			)}
+			<div
+				className="text-white mr-1 display-3 bg-danger p-5  border border-light rounded mr-3"
+				id="seconds">
 				{seconds}
 			</div>
 		</div>

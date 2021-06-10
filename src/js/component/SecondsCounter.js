@@ -11,8 +11,8 @@ export function SecondsCounter() {
 			<Hours />
 			<div className="bg-danger pt-5 pb-5 MyEOpacity text-white">:</div>
 			<Minutes />
-			<div className="bg-danger pt-5 pb-5 MyEOpacity text-white">,</div>
-			<Seconds />
+			<div className="bg-danger pt-5 pb-5 MyEOpacity text-white">.</div>
+			<Seconds seconds={0} />
 		</div>
 	);
 }

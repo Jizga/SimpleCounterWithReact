@@ -9,7 +9,6 @@ import "bootstrap";
 import "../styles/index.scss";
 
 //import your own components
-// import { Home } from "./component/home.js";
 import { SecondsCounter } from "./component/SecondsCounter.js";
 
 //render your react application

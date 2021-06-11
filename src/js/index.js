@@ -9,7 +9,7 @@ import "bootstrap";
 import "../styles/index.scss";
 
 //import your own components
-import { SecondsCounter } from "./component/SecondsCounter.js";
+import { Counter } from "./component/Counter.js";
 
 //render your react application
-ReactDOM.render(<SecondsCounter />, document.querySelector("#app"));
+ReactDOM.render(<Counter />, document.querySelector("#app"));

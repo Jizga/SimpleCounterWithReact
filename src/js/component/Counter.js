@@ -42,8 +42,20 @@ export function Counter() {
 		setHours((hours = 0));
 		console.log("RESET!!", "counter --> ", counter);
 		console.log("RESET!!", "seconds --> ", seconds);
-		console.log("RESET!!", "minutes --> ", minutes);
-		console.log("RESET!!", "hours --> ", hours);
+	}
+
+	function stop() {
+		setCounter(counter);
+		setSeconds(seconds);
+		setMinutes(minutes);
+		setHours(hours);
+
+		console.log("STOP!!!!", "counter --> ", counter);
+		console.log("STOP!!!!", "seconds --> ", seconds);
+	}
+
+	function resume() {
+		console.log("Resume!");
 	}
 
 	window.onload = function() {
@@ -68,13 +80,21 @@ export function Counter() {
 			</div>
 
 			<div className="d-flex justify-content-center pb-5">
-				<button className="btn btn-outline-danger mr-4">Stop</button>
 				<button
 					className="btn btn-outline-success mr-4"
 					onClick={() => reset()}>
 					Reset
 				</button>
-				<button className="btn btn-outline-warning">Resume</button>
+				<button
+					className="btn btn-outline-danger mr-4"
+					onClick={() => stop()}>
+					Stop
+				</button>
+				<button
+					className="btn btn-outline-warning"
+					onClick={() => resume()}>
+					Resume
+				</button>
 			</div>
 		</div>
 	);

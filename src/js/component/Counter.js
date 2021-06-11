@@ -9,7 +9,7 @@ export function Counter() {
 
 	function counterElements() {
 		setInterval(function() {
-			setCounter(counter++);
+			setCounter((counter += 1));
 			incrementElement("seconds");
 			if (seconds > 59) {
 				setSeconds((seconds = 0));
@@ -34,24 +34,48 @@ export function Counter() {
 		}
 	}
 
+	// NO FUNCIONA !!!! >__<
+	function reset() {
+		setCounter((counter = 0));
+		setSeconds((seconds = 0));
+		setMinutes((minutes = 0));
+		setHours((hours = 0));
+		console.log("RESET!!", "counter --> ", counter);
+		console.log("RESET!!", "seconds --> ", seconds);
+		console.log("RESET!!", "minutes --> ", minutes);
+		console.log("RESET!!", "hours --> ", hours);
+	}
+
 	window.onload = function() {
 		counterElements();
 	};
 
 	return (
-		<div className="container-fluid d-flex justify-content-center bg-dark p-5 mt-5 myContainer border-top border-bottom border-light">
-			<div className="bg-danger p-5 MyEOpacity border border-light rounded mr-3">
-				<i className="far fa-clock text-white fa-5x"></i>
+		<div className="bg-dark border-top border-bottom border-light myContainer">
+			<div className="container-fluid d-flex justify-content-center p-5 mt-5">
+				<div className="bg-danger p-5 MyEOpacity border border-light rounded mr-3">
+					<i className="far fa-clock text-white fa-5x"></i>
+				</div>
+				<CounterElement time={hours} />
+				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
+					:
+				</div>
+				<CounterElement time={minutes} />
+				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
+					.
+				</div>
+				<CounterElement time={seconds} />
 			</div>
-			<CounterElement time={hours} />
-			<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
-				:
+
+			<div className="d-flex justify-content-center pb-5">
+				<button className="btn btn-outline-danger mr-4">Stop</button>
+				<button
+					className="btn btn-outline-success mr-4"
+					onClick={() => reset()}>
+					Reset
+				</button>
+				<button className="btn btn-outline-warning">Resume</button>
 			</div>
-			<CounterElement time={minutes} />
-			<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
-				.
-			</div>
-			<CounterElement time={seconds} />
 		</div>
 	);
 }

@@ -1,66 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CounterElement } from "./CounterElement";
 
 export function Counter() {
-	let [counter, setCounter] = useState(0);
+	let [counter, setCounter] = useState(342255);
+
+	//HACERLO CON SOLO EL COUNTER
 	let [hours, setHours] = useState(0);
 	let [minutes, setMinutes] = useState(0);
-	let [seconds, setSeconds] = useState(0);
+	let [segunds, setSegunds] = useState(0);
 
-	function counterElements() {
-		setInterval(function() {
-			setCounter((counter += 1));
-			incrementElement("seconds");
-			if (seconds > 59) {
-				setSeconds((seconds = 0));
-				incrementElement("minutes");
-			}
-			if (minutes > 59) {
-				setMinutes((minutes = 0));
-				incrementElement("hours");
-			}
-		}, 1000);
-	}
-
-	function incrementElement(time) {
-		if (time === "hours") {
-			setHours((hours += 1));
-		}
-		if (time === "minutes") {
-			setMinutes((minutes += 1));
-		}
-		if (time === "seconds") {
-			setSeconds((seconds += 1));
-		}
-	}
-
-	// NO FUNCIONA !!!! >__<
-	function reset() {
-		setCounter((counter = 0));
-		setSeconds((seconds = 0));
-		setMinutes((minutes = 0));
-		setHours((hours = 0));
-		console.log("RESET!!", "counter --> ", counter);
-		console.log("RESET!!", "seconds --> ", seconds);
-	}
-
-	function stop() {
-		setCounter(counter);
-		setSeconds(seconds);
-		setMinutes(minutes);
-		setHours(hours);
-
-		console.log("STOP!!!!", "counter --> ", counter);
-		console.log("STOP!!!!", "seconds --> ", seconds);
-	}
-
-	function resume() {
-		console.log("Resume!");
-	}
-
-	window.onload = function() {
-		counterElements();
-	};
+	useEffect(() => {
+		counter > 0 &&
+			setTimeout(() => {
+				setCounter(counter + 1);
+				setHours(Math.floor(counter / 3600000));
+				setMinutes(Math.floor(counter / 60000));
+				setSegunds(Math.floor(counter / 1000));
+			}, 1000);
+	}, [counter]);
 
 	return (
 		<div className="bg-dark border-top border-bottom border-light myContainer">
@@ -76,10 +33,12 @@ export function Counter() {
 				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
 					.
 				</div>
-				<CounterElement time={seconds} />
+				<CounterElement time={segunds} />
 			</div>
 
-			<div className="d-flex justify-content-center pb-5">
+			<div className="bg-warning text-center">{counter}</div>
+
+			{/* <div className="d-flex justify-content-center pb-5">
 				<button
 					className="btn btn-outline-success mr-4"
 					onClick={() => reset()}>
@@ -95,7 +54,7 @@ export function Counter() {
 					onClick={() => resume()}>
 					Resume
 				</button>
-			</div>
+			</div> */}
 		</div>
 	);
 }

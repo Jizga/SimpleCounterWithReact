@@ -4,7 +4,7 @@ import { Hours } from "./Hours";
 import { Minutes } from "./Minutes";
 import { Seconds } from "./Seconds";
 
-export function SecondsCounter() {
+export function Counter() {
 	return (
 		<div className="container-fluid d-flex justify-content-center bg-dark p-5 mt-5 myContainer border-top border-bottom border-light">
 			<ClockElement />

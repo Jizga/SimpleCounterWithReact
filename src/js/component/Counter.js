@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ClockElement } from "./ClockElement";
 import { CounterElement } from "./CounterElement";
 
 export function Counter() {

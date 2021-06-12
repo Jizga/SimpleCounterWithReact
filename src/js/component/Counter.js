@@ -2,23 +2,61 @@ import React, { useState, useEffect } from "react";
 import { CounterElement } from "./CounterElement";
 
 export function Counter() {
-	let [counter, setCounter] = useState(342255);
+	let [counter, setCounter] = useState(0);
 
 	//HACERLO CON SOLO EL COUNTER
 	let [hours, setHours] = useState(0);
 	let [minutes, setMinutes] = useState(0);
-	let [segunds, setSegunds] = useState(0);
+	let [seconds, setSeconds] = useState(0);
+
+	//Para resetear el contador
+	let [reset, setReset] = useState(false);
 
 	useEffect(() => {
-		counter > 0 &&
-			setTimeout(() => {
-				setCounter(counter + 1);
-				setHours(Math.floor(counter / 3600000));
-				setMinutes(Math.floor(counter / 60000));
-				setSegunds(Math.floor(counter / 1000));
-			}, 1000);
+		timerAssignment();
+		if (reset === true) resetAction();
 	}, [counter]);
 
+	function timerAssignment() {
+		setTimeout(function() {
+			setCounter(counter + 1);
+		}, 1000);
+
+		incrementTimer("seconds");
+		if (seconds >= 59) {
+			setSeconds(0);
+			incrementTimer("minutes");
+		}
+		if (minutes >= 59) {
+			setMinutes(0);
+			incrementTimer("hours");
+		}
+	}
+
+	function incrementTimer(time) {
+		if (time === "hours") {
+			setHours(hours + 1);
+		}
+		if (time === "minutes") {
+			setMinutes(minutes + 1);
+		}
+		if (time === "seconds") {
+			setSeconds(seconds + 1);
+		}
+	}
+
+	function resetChange() {
+		setReset(true);
+	}
+
+	function resetAction() {
+		setCounter(0);
+		setSeconds(0);
+		setMinutes(0);
+		setHours(0);
+
+		setReset(false);
+	}
 	return (
 		<div className="bg-dark border-top border-bottom border-light myContainer">
 			<div className="container-fluid d-flex justify-content-center p-5 mt-5">
@@ -33,18 +71,18 @@ export function Counter() {
 				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
 					.
 				</div>
-				<CounterElement time={segunds} />
+				<CounterElement time={seconds} />
 			</div>
 
 			<div className="bg-warning text-center">{counter}</div>
 
-			{/* <div className="d-flex justify-content-center pb-5">
+			<div className="d-flex justify-content-center pb-5">
 				<button
 					className="btn btn-outline-success mr-4"
-					onClick={() => reset()}>
+					onClick={() => resetChange()}>
 					Reset
 				</button>
-				<button
+				{/* <button
 					className="btn btn-outline-danger mr-4"
 					onClick={() => stop()}>
 					Stop
@@ -53,8 +91,8 @@ export function Counter() {
 					className="btn btn-outline-warning"
 					onClick={() => resume()}>
 					Resume
-				</button>
-			</div> */}
+				</button> */}
+			</div>
 		</div>
 	);
 }

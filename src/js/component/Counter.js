@@ -2,29 +2,39 @@ import React, { useState, useEffect } from "react";
 import { CounterElement } from "./CounterElement";
 
 export function Counter() {
-	let [counter, setCounter] = useState(null);
+	let [counter, setCounter] = useState(0);
 
-	//HACERLO CON SOLO EL COUNTER (??????)
+	// **************** HACERLO CON SOLO EL COUNTER (??????) ******************
 	let [hours, setHours] = useState(0);
 	let [minutes, setMinutes] = useState(0);
-	let [seconds, setSeconds] = useState(null);
-	//
-	//Para que los segundos empiecen en cero y se elimine el desface de 1 segundo entre el counter y los seconds
-	// let [seconds, setSeconds] = useState(-1);
+	// let [seconds, setSeconds] = useState(0);
 
-	//Para resetear el contador
-	let [reset, setReset] = useState(false);
+	// --- Para que los segundos empiecen en cero y se elimine el desface de 1 segundo entre el counter y los seconds
+	let [seconds, setSeconds] = useState(-1);
+
+	let isPlay = false;
+
+	// ==================== con setTimeout() no funciona bien ===================
+	// useEffect(() => {
+	// 	setTimeout(function() {
+	// 		setCounter(counter + 1);
+	// 	}, 1000);
+	// 	timerAssignment();
+	// }, [counter]);
 
 	useEffect(() => {
+		const interval = setInterval(() => {
+			setCounter(counter => counter + 1);
+		}, 1000);
+
 		timerAssignment();
-		if (reset === true) resetAction();
+
+		if (isPlay === false) isPlay = true;
+
+		return () => clearInterval(interval);
 	}, [counter]);
 
 	function timerAssignment() {
-		setTimeout(function() {
-			setCounter(counter + 1);
-		}, 1000);
-
 		incrementTimer("seconds");
 		if (seconds >= 59) {
 			setSeconds(0);
@@ -48,19 +58,36 @@ export function Counter() {
 		}
 	}
 
-	//Al pulsar el botón de reset los segundos parece que cuentan de dos en dos pq el counter va el doble de rápido
-	function resetChange() {
-		setReset(true);
-	}
-
-	function resetAction() {
+	//Al pulsar reset los segundos cuentan de dos en dos y el counter hace cosas raras ---->>>>  con setTimeout()
+	// Con setInterval() va bien
+	function reset() {
+		if (isPlay === true) isPlay = false;
 		setCounter(0);
-		setSeconds(0);
+		setSeconds(-1);
 		setMinutes(0);
 		setHours(0);
-
-		setReset(false);
+		clearInterval(counter);
 	}
+
+	//NO FUNCIONA
+	function stop() {
+		if (isPlay === true) isPlay = false;
+
+		setCounter(counter);
+		setSeconds(seconds);
+		setMinutes(minutes);
+		setHours(hours);
+		clearInterval(counter);
+
+		console.log("stop!!");
+		console.log("isPlay!", isPlay);
+	}
+
+	//NO FUNCIONA
+	function resume() {
+		console.log("Resume!!");
+	}
+
 	return (
 		<div className="bg-dark border-top border-bottom border-light myContainer">
 			<div className="container-fluid d-flex justify-content-center p-5 mt-5">
@@ -83,19 +110,22 @@ export function Counter() {
 			<div className="d-flex justify-content-center pb-5">
 				<button
 					className="btn btn-outline-success mr-4"
-					onClick={() => resetChange()}>
+					// onClick={() => resetChange()}
+					onClick={() => reset()}>
 					Reset
 				</button>
-				{/* <button
+
+				<button
 					className="btn btn-outline-danger mr-4"
 					onClick={() => stop()}>
 					Stop
 				</button>
+
 				<button
 					className="btn btn-outline-warning"
 					onClick={() => resume()}>
 					Resume
-				</button> */}
+				</button>
 			</div>
 		</div>
 	);

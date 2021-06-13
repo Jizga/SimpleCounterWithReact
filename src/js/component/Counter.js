@@ -4,10 +4,11 @@ import { CounterElement } from "./CounterElement";
 export function Counter() {
 	let [counter, setCounter] = useState(null);
 
-	//HACERLO CON SOLO EL COUNTER
+	//HACERLO CON SOLO EL COUNTER (??????)
 	let [hours, setHours] = useState(0);
 	let [minutes, setMinutes] = useState(0);
 	let [seconds, setSeconds] = useState(null);
+	//
 	//Para que los segundos empiecen en cero y se elimine el desface de 1 segundo entre el counter y los seconds
 	// let [seconds, setSeconds] = useState(-1);
 

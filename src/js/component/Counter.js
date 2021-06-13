@@ -12,7 +12,8 @@ export function Counter() {
 	// --- Para que los segundos empiecen en cero y se elimine el desface de 1 segundo entre el counter y los seconds
 	let [seconds, setSeconds] = useState(-1);
 
-	let isPlay = false;
+	//Variable necesaria para usar ACTIVAR Y DESACTIVAR el cronómetro
+	const [isPlay, setIsPlay] = useState(true);
 
 	// ==================== con setTimeout() no funciona bien ===================
 	// useEffect(() => {
@@ -23,16 +24,20 @@ export function Counter() {
 	// }, [counter]);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setCounter(counter => counter + 1);
-		}, 1000);
+		let interval = null;
 
-		timerAssignment();
+		if (isPlay) {
+			interval = setInterval(() => {
+				setCounter(counter + 1);
+			}, 1000);
 
-		if (isPlay === false) isPlay = true;
+			timerAssignment();
+
+			setIsPlay(true);
+		}
 
 		return () => clearInterval(interval);
-	}, [counter]);
+	}, [isPlay, counter]);
 
 	function timerAssignment() {
 		incrementTimer("seconds");
@@ -61,7 +66,7 @@ export function Counter() {
 	//Al pulsar reset los segundos cuentan de dos en dos y el counter hace cosas raras ---->>>>  con setTimeout()
 	// Con setInterval() va bien
 	function reset() {
-		if (isPlay === true) isPlay = false;
+		setIsPlay(false);
 		setCounter(0);
 		setSeconds(-1);
 		setMinutes(0);
@@ -69,23 +74,23 @@ export function Counter() {
 		clearInterval(counter);
 	}
 
-	//NO FUNCIONA
 	function stop() {
-		if (isPlay === true) isPlay = false;
-
+		setIsPlay(false);
 		setCounter(counter);
 		setSeconds(seconds);
 		setMinutes(minutes);
 		setHours(hours);
 		clearInterval(counter);
-
-		console.log("stop!!");
-		console.log("isPlay!", isPlay);
 	}
 
-	//NO FUNCIONA
 	function resume() {
-		console.log("Resume!!");
+		setIsPlay(true);
+		setCounter(counter);
+		// **** "seconds - 1" para eliminar el desface de 1 segundo entre el counter y los segundos
+		setSeconds(seconds - 1);
+		setMinutes(minutes);
+		setHours(hours);
+		clearInterval(counter);
 	}
 
 	return (
@@ -110,7 +115,6 @@ export function Counter() {
 			<div className="d-flex justify-content-center pb-5">
 				<button
 					className="btn btn-outline-success mr-4"
-					// onClick={() => resetChange()}
 					onClick={() => reset()}>
 					Reset
 				</button>

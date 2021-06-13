@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { CounterElement } from "./CounterElement";
 
 export function Counter() {
-	let [counter, setCounter] = useState(0);
+	let [counter, setCounter] = useState(null);
 
 	//HACERLO CON SOLO EL COUNTER
 	let [hours, setHours] = useState(0);
 	let [minutes, setMinutes] = useState(0);
-	let [seconds, setSeconds] = useState(0);
+	let [seconds, setSeconds] = useState(null);
+	//Para que los segundos empiecen en cero y se elimine el desface de 1 segundo entre el counter y los seconds
+	// let [seconds, setSeconds] = useState(-1);
 
 	//Para resetear el contador
 	let [reset, setReset] = useState(false);
@@ -45,6 +47,7 @@ export function Counter() {
 		}
 	}
 
+	//Al pulsar el botón de reset los segundos parece que cuentan de dos en dos pq el counter va el doble de rápido
 	function resetChange() {
 		setReset(true);
 	}
@@ -69,7 +72,7 @@ export function Counter() {
 				</div>
 				<CounterElement time={minutes} />
 				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
-					.
+					:
 				</div>
 				<CounterElement time={seconds} />
 			</div>

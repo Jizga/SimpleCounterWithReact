@@ -2,25 +2,27 @@ import React, { useState, useEffect } from "react";
 import { CounterElement } from "./CounterElement";
 
 export function Counter() {
-	let [counter, setCounter] = useState(0);
+	const [counter, setCounter] = useState(0);
 
-	// **************** HACERLO CON SOLO EL COUNTER (??????) ******************
-	let [hours, setHours] = useState(0);
-	let [minutes, setMinutes] = useState(0);
-	// let [seconds, setSeconds] = useState(0);
+	const [hours, setHours] = useState(0);
+	const [minutes, setMinutes] = useState(0);
 
 	// --- Para que los segundos empiecen en cero y se elimine el desface de 1 segundo entre el counter y los seconds
-	let [seconds, setSeconds] = useState(-1);
+	const [seconds, setSeconds] = useState(-1);
 
 	//Variable necesaria para usar ACTIVAR Y DESACTIVAR el cronómetro
 	const [isPlay, setIsPlay] = useState(true);
 
 	// ==================== con setTimeout() no funciona bien ===================
 	// useEffect(() => {
-	// 	setTimeout(function() {
+	// 	let interval = setTimeout(function() {
 	// 		setCounter(counter + 1);
+	// 		console.log("holaa");
 	// 	}, 1000);
+
 	// 	timerAssignment();
+
+	// 	return () => clearTimeout(interval);
 	// }, [counter]);
 
 	useEffect(() => {
@@ -63,16 +65,13 @@ export function Counter() {
 		}
 	}
 
-	//Al pulsar "reset" los segundos cuentan de dos en dos y el counter hace cosas raras ---->>>>  con "setTimeout()"
-	// Con "setInterval()" va bien
 	function reset() {
 		setIsPlay(false);
 		setCounter(0);
-		// **** "seconds = - 1" para eliminar el desface de 1 segundo entre el counter y los segundos
+		// "seconds = - 1" para eliminar el desface de 1 segundo entre el counter y los segundos
 		setSeconds(-1);
 		setMinutes(0);
 		setHours(0);
-		clearInterval(counter);
 		//Reactivar el cronómetro tras haberlo reiniciado
 		setIsPlay(true);
 	}
@@ -83,17 +82,15 @@ export function Counter() {
 		setSeconds(seconds);
 		setMinutes(minutes);
 		setHours(hours);
-		clearInterval(counter);
 	}
 
 	function resume() {
 		setIsPlay(true);
 		setCounter(counter);
-		// **** "seconds - 1" para eliminar el desface de 1 segundo entre el counter y los segundos
+		// "seconds - 1" para eliminar el desface de 1 segundo entre el counter y los segundos
 		setSeconds(seconds - 1);
 		setMinutes(minutes);
 		setHours(hours);
-		clearInterval(counter);
 	}
 
 	return (

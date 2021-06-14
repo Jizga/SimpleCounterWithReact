@@ -63,11 +63,12 @@ export function Counter() {
 		}
 	}
 
-	//Al pulsar reset los segundos cuentan de dos en dos y el counter hace cosas raras ---->>>>  con setTimeout()
-	// Con setInterval() va bien
+	//Al pulsar "reset" los segundos cuentan de dos en dos y el counter hace cosas raras ---->>>>  con "setTimeout()"
+	// Con "setInterval()" va bien
 	function reset() {
 		setIsPlay(false);
 		setCounter(0);
+		// **** "seconds = - 1" para eliminar el desface de 1 segundo entre el counter y los segundos
 		setSeconds(-1);
 		setMinutes(0);
 		setHours(0);
@@ -94,42 +95,46 @@ export function Counter() {
 	}
 
 	return (
-		<div className="bg-dark border-top border-bottom border-light myContainer">
-			<div className="container-fluid d-flex justify-content-center p-5 mt-5">
-				<div className="bg-danger p-5 MyEOpacity border border-light rounded mr-3">
-					<i className="far fa-clock text-white fa-5x"></i>
+		<div className="row">
+			<div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-dark border-top border-bottom border-light myContainer">
+				<div className="row container-fluid d-flex justify-content-center p-5 mt-5">
+					<div className="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2 text-center bg-danger p-5 MyEOpacity border border-light rounded">
+						<i className="far fa-clock text-white fa-4x"></i>
+					</div>
+					<CounterElement time={hours} />
+					<div className="col-4 col-sm-4 col-md-2 col-lg-1 col-xl-1 text-white display-3 bg-danger p-5 border border-light rounded MyEOpacity">
+						:
+					</div>
+					<CounterElement time={minutes} />
+					<div className="col-4 col-sm-4 col-md-2 col-lg-1 col-xl-1 text-white display-3 bg-danger p-5 border border-light rounded MyEOpacity">
+						:
+					</div>
+					<CounterElement time={seconds} />
 				</div>
-				<CounterElement time={hours} />
-				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
-					:
+
+				<div className="bg-warning text-center mb-3">
+					Counter: {counter}
 				</div>
-				<CounterElement time={minutes} />
-				<div className="text-white display-3 mr-1 bg-danger p-5  border border-light rounded mr-3 MyEOpacity">
-					:
+
+				<div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-around pb-5">
+					<button
+						className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 btn btn-outline-success"
+						onClick={() => reset()}>
+						Reset
+					</button>
+
+					<button
+						className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 btn btn-outline-danger"
+						onClick={() => stop()}>
+						Stop
+					</button>
+
+					<button
+						className="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 btn btn-outline-warning"
+						onClick={() => resume()}>
+						Resume
+					</button>
 				</div>
-				<CounterElement time={seconds} />
-			</div>
-
-			<div className="bg-warning text-center">{counter}</div>
-
-			<div className="d-flex justify-content-center pb-5">
-				<button
-					className="btn btn-outline-success mr-4"
-					onClick={() => reset()}>
-					Reset
-				</button>
-
-				<button
-					className="btn btn-outline-danger mr-4"
-					onClick={() => stop()}>
-					Stop
-				</button>
-
-				<button
-					className="btn btn-outline-warning"
-					onClick={() => resume()}>
-					Resume
-				</button>
 			</div>
 		</div>
 	);

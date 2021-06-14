@@ -73,6 +73,8 @@ export function Counter() {
 		setMinutes(0);
 		setHours(0);
 		clearInterval(counter);
+		//Reactivar el cronómetro tras haberlo reiniciado
+		setIsPlay(true);
 	}
 
 	function stop() {
